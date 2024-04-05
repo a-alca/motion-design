@@ -1,10 +1,31 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouteReuseStrategy, RouterModule, Routes } from '@angular/router';
+import { ToDoListComponent } from './to-do-list/to-do-list.component';
+import { AppRouteReuseStrategy } from './app-route-reuse-strategy';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'toDoList',
+    pathMatch: 'full',
+    data: {
+      reuseComponent: false
+    }
+  },
+  {
+    path: 'toDoList',
+    component: ToDoListComponent,
+    data: {
+      reuseComponent: false
+    }
+  }
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
+  exports: [RouterModule],
+  providers: [
+    {provide: RouteReuseStrategy, useClass: AppRouteReuseStrategy}
+  ],
 })
 export class AppRoutingModule { }

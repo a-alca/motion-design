@@ -1,0 +1,82 @@
+<section class="criar-tarefa">
+  <div class="botao-criar">
+    <button (click)="mostrarOuEsconderFormulario()">
+      Criar nova tarefa
+    </button>
+  </div>
+  <form class="formulario ff-prompt" [formGroup]="formulario" *ngIf="formAberto">
+    <label for="description">Descrição da tarefa</label>
+    <input required type="text" formControlName="description" placeholder="Digite a tarefa"
+      [ngClass]="campoValidado('description')">
+    <app-mensagem *ngIf="!validado" mensagemValidacao="Preencha a descrição">
+    </app-mensagem>
+    <label for="priority">priority</label>
+    <select required formControlName="priority" [ngClass]="campoValidado('priority')">
+      <option disabled value="">Selecione</option>
+      <option value="Alta">Alta</option>
+      <option value="Normal">Normal</option>
+      <option value="Baixa">Baixa</option>
+    </select>
+    <app-mensagem *ngIf="!validado" mensagemValidacao="Escolha a priority">
+    </app-mensagem>
+    <label for="category">category</label>
+    <select required formControlName="category" [ngClass]="campoValidado('category')">
+      <option disabled value="">Selecione</option>
+      <option value="Casa">Casa</option>
+      <option value="Trabalho">Trabalho</option>
+      <option value="Estudos">Estudos</option>
+    </select>
+    <app-mensagem *ngIf="!validado" mensagemValidacao="Escolha a category">
+    </app-mensagem>
+    <div class="botoes-form">
+      <button (click)="salvarTarefa()" class="botao-form" [ngClass]="habilitarBotao()" [disabled]="!formulario.valid">
+        Salvar
+      </button>
+      <button (click)="cancelar()" class="botao-form botao-cancelar">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</section>
+<section class="listagem-tarefas">
+  <div class="ilustracao" *ngIf="!formAberto">
+    <h2>Suas tarefas</h2>
+    <img src="assets/imagens/ilustracao-Tarefas.png"
+      alt="Ilustração de um ambiente com mesa, computador, quadro e um vaso com planta">
+  </div>
+  <div *ngIf="toDoList.length > 0, else semTarefas">
+    <div class="lista-tarefas card-{{ tarefa.category }}" *ngFor="let tarefa of toDoList">
+      <div class="info-card">
+        <p class="category-tarefa category-{{ tarefa.category }}">
+          <img src="assets/icones/{{ tarefa.category }}.png" alt="Ícone de {{ tarefa.category }}">
+          {{ tarefa.category }}
+        </p>
+        <p class="priority-tarefa priority-{{ tarefa.priority }}">
+          {{ tarefa.priority }}
+        </p>
+        <p class="status-tarefa">
+          <button [ngClass]="(tarefa.statusFinish == true) ? 'icone-checked' : 'icone-unchecked'"
+            (click)="finalizarTarefa(tarefa.id);">
+          </button>
+        </p>
+      </div>
+      <div class="conteudo">
+        <p class="card-description ff-prompt
+          card-{{ tarefa.statusFinish ? 'Feito' : '' }}">
+          {{ tarefa.description }}
+        </p>
+        <div class="botoes-card">
+          <button class="botao-editar" (click)="carregarParaEditar(tarefa.id)">
+            <img src="assets/icones/icone-editar.png" alt="Ícone de editar">
+          </button>
+          <button (click)="excluirTarefa(tarefa.id)" class="botao-deletar">
+            <img src="assets/icones/icone-excluir.png" alt="Ícone de excluir">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<ng-template #semTarefas>
+  <p class="ng-template ff-prompt">Olá! Ainda não há tarefas por aqui! ♡⸜(˶˃ ᵕ ˂˶)⸝♡</p>
+</ng-template>
