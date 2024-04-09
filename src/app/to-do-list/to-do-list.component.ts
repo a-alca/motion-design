@@ -1,3 +1,4 @@
+import { state, style, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,7 +9,16 @@ import { ToDoService } from 'src/app/service/to-do.service';
 @Component({
   selector: 'app-to-do-list',
   templateUrl: './to-do-list.component.html',
-  styleUrls: ['./to-do-list.component.css']
+  styleUrls: ['./to-do-list.component.css'],
+  animations: [trigger('highlightedState', [
+    state('default', style({
+      border: '2px solid #B2B6FF'
+    })),
+    state('highlighted', style({
+      border: '4px solid #B2B6FF',
+      filter: 'brightness(92%)'
+    }))
+  ])]
 })
 export class ToDoListComponent implements OnInit {
   toDoList: ToDo[] = [];
