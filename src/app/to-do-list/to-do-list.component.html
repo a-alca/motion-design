@@ -45,7 +45,8 @@
       alt="Ilustração de um ambiente com mesa, computador, quadro e um vaso com planta">
   </div>
   <div *ngIf="toDoList.length > 0, else semTarefas">
-    <div class="lista-tarefas card-{{ tarefa.category }}" *ngFor="let tarefa of toDoList">
+    <div class="lista-tarefas card-{{ tarefa.category }}" *ngFor="let tarefa of toDoList; let i = index"
+      (mouseover)="indexTarefa = i" [@highlightedState]="indexTarefa === i ? 'highlighted' : 'default'">
       <div class="info-card">
         <p class="category-tarefa category-{{ tarefa.category }}">
           <img src="assets/icones/{{ tarefa.category }}.png" alt="Ícone de {{ tarefa.category }}">
