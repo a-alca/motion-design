@@ -4,13 +4,13 @@ import { Router } from '@angular/router';
 import { ToDo } from 'src/app/inteface/todo';
 
 import { ToDoService } from 'src/app/service/to-do.service';
-import { highlightedStateTrigger } from '../animations';
+import { highlightedStateTrigger, shownStateTrigger } from '../animations';
 
 @Component({
   selector: 'app-to-do-list',
   templateUrl: './to-do-list.component.html',
   styleUrls: ['./to-do-list.component.css'],
-  animations: [highlightedStateTrigger]
+  animations: [highlightedStateTrigger, shownStateTrigger]
 })
 export class ToDoListComponent implements OnInit {
   toDoList: ToDo[] = [];
