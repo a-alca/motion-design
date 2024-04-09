@@ -33,7 +33,7 @@ export class ToDoListComponent implements OnInit {
   ) {}
 
   ngOnInit(): ToDo[] {
-      this.service.show(this.category).subscribe((toDoList) => {
+      this.service.list(this.category).subscribe((toDoList) => {
         this.toDoList = toDoList;
       });
       return this.toDoList
@@ -136,7 +136,7 @@ export class ToDoListComponent implements OnInit {
   }
 
   listarAposCheck() {
-    this.service.show(this.category).subscribe((toDoList) => {
+    this.service.list(this.category).subscribe((toDoList) => {
       this.toDoList = this.toDoList
     });
   }

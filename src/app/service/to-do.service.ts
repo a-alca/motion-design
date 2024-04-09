@@ -10,10 +10,10 @@ export class ToDoService {
   private readonly API = 'http://localhost:3000/todos';
   constructor(private http: HttpClient) { }
 
-  show(category: string): Observable<ToDo[]> {
+  list(category: string): Observable<ToDo[]> {
     let params = new HttpParams().appendAll({
       _sort: 'id',
-      _order: 'desc',
+      // _order: 'description',
     });
     if(category) {
       params = params.append('category', category);
