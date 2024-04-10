@@ -4,13 +4,14 @@ import { Router } from '@angular/router';
 import { ToDo } from 'src/app/inteface/todo';
 
 import { ToDoService } from 'src/app/service/to-do.service';
-import { highlightedStateTrigger, shownStateTrigger } from '../animations';
+import {
+  highlightedStateTrigger, shownStateTrigger, checkButtonTrigger, deleteTaskTrigger } from '../animations';
 
 @Component({
   selector: 'app-to-do-list',
   templateUrl: './to-do-list.component.html',
   styleUrls: ['./to-do-list.component.css'],
-  animations: [highlightedStateTrigger, shownStateTrigger]
+  animations: [highlightedStateTrigger, shownStateTrigger, checkButtonTrigger, deleteTaskTrigger]
 })
 export class ToDoListComponent implements OnInit {
   toDoList: ToDo[] = [];
@@ -130,6 +131,7 @@ export class ToDoListComponent implements OnInit {
   }
 
   finalizarTarefa(id: number) {
+    this.id = id
     this.service.buscarPorId(id!).subscribe((todo) => {
       this.service.atualizarStatusTarefa(todo).subscribe(() => {
         this.listarAposCheck();
@@ -139,7 +141,7 @@ export class ToDoListComponent implements OnInit {
 
   listarAposCheck() {
     this.service.list(this.category).subscribe((toDoList) => {
-      this.toDoList = this.toDoList
+      this.toDoList = toDoList
     });
   }
 
