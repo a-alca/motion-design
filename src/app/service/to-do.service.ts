@@ -37,7 +37,7 @@ export class ToDoService {
 
   editar(todo: ToDo): Observable<ToDo> {
     const url = `${this.API}/${todo.id}`;
-    return this.http.put<ToDo>(url, todo);
+    return this.http.put<ToDo>(url, todo)
   }
 
   excluir(id: number): Observable<ToDo> {

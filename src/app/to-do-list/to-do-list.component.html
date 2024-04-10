@@ -47,7 +47,7 @@
   <div *ngIf="toDoList.length > 0, else semTarefas">
     <div class="lista-tarefas card-{{ tarefa.category }}" *ngFor="let tarefa of toDoList; let i = index"
       (mouseover)="indexTarefa = i" [@highlightedState]="indexTarefa === i ? 'highlighted' : 'default'">
-      <div class="info-card">
+      <div class="info-card" @deleteTask>
         <p class="category-tarefa category-{{ tarefa.category }}">
           <img src="assets/icones/{{ tarefa.category }}.png" alt="Ícone de {{ tarefa.category }}">
           {{ tarefa.category }}
@@ -57,7 +57,7 @@
         </p>
         <p class="status-tarefa">
           <button [ngClass]="(tarefa.statusFinish == true) ? 'icone-checked' : 'icone-unchecked'"
-            (click)="finalizarTarefa(tarefa.id);">
+            (click)="finalizarTarefa(tarefa.id);" [@checkButton]="(tarefa.id === id ? 'checked' : 'unchecked')">
           </button>
         </p>
       </div>

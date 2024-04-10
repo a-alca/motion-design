@@ -22,45 +22,24 @@
       "priority": "Baixa"
     },
     {
-      "id": "4",
-      "description": "Conhecer o Motion Desing",
-      "category": "Casa",
-      "statusFinish": true,
-      "priority": "Normal"
-    },
-    {
-      "id": "5",
-      "description": "Conhecer o Motion Desing",
-      "category": "Casa",
-      "statusFinish": true,
-      "priority": "Alta"
-    },
-    {
       "id": "6",
       "description": "Conhecer o Motion Desing",
       "category": "Casa",
-      "statusFinish": true,
+      "statusFinish": false,
       "priority": "Alta"
-    },
-    {
-      "id": "7",
-      "description": "Conhecer o Motion Desing",
-      "category": "Casa",
-      "statusFinish": true,
-      "priority": "Baixa"
     },
     {
       "id": "8",
       "description": "Conhecer o Motion Desing",
       "category": "Casa",
-      "statusFinish": true,
+      "statusFinish": false,
       "priority": "Normal"
     },
     {
       "id": "9",
       "description": "Conhecer o Motion Desing",
       "category": "Casa",
-      "statusFinish": true,
+      "statusFinish": false,
       "priority": "Baixa"
     }
   ]
