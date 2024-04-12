@@ -5,13 +5,13 @@ import { ToDo } from 'src/app/inteface/todo';
 
 import { ToDoService } from 'src/app/service/to-do.service';
 import {
-  highlightedStateTrigger, shownStateTrigger, checkButtonTrigger, deleteTaskTrigger } from '../animations';
+  highlightedStateTrigger, shownStateTrigger, checkButtonTrigger, deleteTaskTrigger, filterTrigger } from '../animations';
 
 @Component({
   selector: 'app-to-do-list',
   templateUrl: './to-do-list.component.html',
   styleUrls: ['./to-do-list.component.css'],
-  animations: [highlightedStateTrigger, shownStateTrigger, checkButtonTrigger, deleteTaskTrigger]
+  animations: [highlightedStateTrigger, shownStateTrigger, checkButtonTrigger, deleteTaskTrigger, filterTrigger]
 })
 export class ToDoListComponent implements OnInit {
   toDoList: ToDo[] = [];
@@ -20,6 +20,8 @@ export class ToDoListComponent implements OnInit {
   validado: boolean = false;
   indexTarefa: number = -1;
   id: number = 0;
+  campoBusca: string = '';
+  tarefasFiltradas: ToDo[] = [];
 
   formulario: FormGroup = this.formBuilder.group({
     id: [0],
@@ -38,13 +40,25 @@ export class ToDoListComponent implements OnInit {
   ngOnInit(): ToDo[] {
       this.service.list(this.category).subscribe((toDoList) => {
         this.toDoList = toDoList;
+        this.tarefasFiltradas = toDoList;
       });
-      return this.toDoList
+      return this.tarefasFiltradas;
   }
 
   mostrarOuEsconderFormulario() {
     this.formAberto = !this.formAberto;
     this.resetarFormulario();
+  }
+
+  filtrarTarefaPorDescricao(description: string) {
+    this.campoBusca = description.trim().toLowerCase()
+    if(description) {
+      this.tarefasFiltradas = this.toDoList.filter(todo =>
+        todo.description.toLowerCase().includes(this.campoBusca)
+      )
+    } else {
+      this.tarefasFiltradas = this.toDoList;
+    }
   }
 
   resetarFormulario() {
@@ -141,7 +155,7 @@ export class ToDoListComponent implements OnInit {
 
   listarAposCheck() {
     this.service.list(this.category).subscribe((toDoList) => {
-      this.toDoList = toDoList
+      this.tarefasFiltradas = toDoList
     });
   }
 

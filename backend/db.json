@@ -4,43 +4,43 @@
       "id": "1",
       "description": "Conhecer o Motion Desing",
       "category": "Casa",
-      "statusFinish": true,
+      "statusFinish": false,
       "priority": "Alta"
     },
     {
       "id": "2",
       "description": "Ouvir act i & act ii",
       "category": "Casa",
-      "statusFinish": true,
+      "statusFinish": false,
       "priority": "Alta"
     },
     {
       "id": "3",
-      "description": "Conhecer o Motion Desing",
+      "description": "brincar com a Luna",
       "category": "Casa",
-      "statusFinish": true,
-      "priority": "Baixa"
+      "statusFinish": false,
+      "priority": "Normal"
     },
     {
       "id": "6",
-      "description": "Conhecer o Motion Desing",
+      "description": "curso IA",
       "category": "Casa",
       "statusFinish": false,
       "priority": "Alta"
     },
     {
       "id": "8",
-      "description": "Conhecer o Motion Desing",
+      "description": "ler",
       "category": "Casa",
       "statusFinish": false,
       "priority": "Normal"
     },
     {
       "id": "9",
-      "description": "Conhecer o Motion Desing",
+      "description": "f1",
       "category": "Casa",
       "statusFinish": false,
-      "priority": "Baixa"
+      "priority": "Alta"
     }
   ]
 }
