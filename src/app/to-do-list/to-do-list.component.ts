@@ -5,13 +5,15 @@ import { ToDo } from 'src/app/inteface/todo';
 
 import { ToDoService } from 'src/app/service/to-do.service';
 import {
-  highlightedStateTrigger, shownStateTrigger, checkButtonTrigger, deleteTaskTrigger, filterTrigger } from '../animations';
+  highlightedStateTrigger, shownStateTrigger, checkButtonTrigger, deleteTaskTrigger, filterTrigger,
+  formButtonTrigger,
+  txtAnimationTrigger} from '../animations';
 
 @Component({
   selector: 'app-to-do-list',
   templateUrl: './to-do-list.component.html',
   styleUrls: ['./to-do-list.component.css'],
-  animations: [highlightedStateTrigger, shownStateTrigger, checkButtonTrigger, deleteTaskTrigger, filterTrigger]
+  animations: [highlightedStateTrigger, shownStateTrigger, checkButtonTrigger, deleteTaskTrigger, filterTrigger, formButtonTrigger, txtAnimationTrigger]
 })
 export class ToDoListComponent implements OnInit {
   toDoList: ToDo[] = [];
