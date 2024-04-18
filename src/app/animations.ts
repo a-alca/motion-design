@@ -121,3 +121,21 @@ export const txtAnimationTrigger = trigger('txtAnimation', [
     ])
   ])
 ])
+
+export const shakeTrigger = trigger('shakeAnimation', [
+  transition('* => *', [
+    query('input.ng-invalid:focus, select.ng-invalid:focus', [
+      animate('0.5s', keyframes([
+        style({ border: '2px solid red' }),
+        style({ transform: 'translateX(-10px)'}),
+        style({ transform: 'translateX(10px)'}),
+        style({ transform: 'translateX(-10px)'}),
+        style({ transform: 'translateX(10px)'}),
+        style({ transform: 'translateX(-10px)'}),
+        style({ transform: 'translateX(10px)'}),
+        style({ transform: 'translateX(-10px)'}),
+        style({ transform: 'translateX(0)'}),
+      ]))
+    ], { optional: true })
+  ])
+])
