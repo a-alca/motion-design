@@ -4,8 +4,8 @@
       Criar nova tarefa
     </button>
   </div>
-  <form @shownState [@formButton]="formulario.valid ? 'valid' : 'invalid'" class="formulario ff-prompt"
-    [formGroup]="formulario" *ngIf="formAberto">
+  <form @shownState [@shakeAnimation]="formulario.value" [@formButton]="formulario.valid ? 'valid' : 'invalid'"
+    class="formulario ff-prompt" [formGroup]="formulario" *ngIf="formAberto">
     <label for="description">Descrição da tarefa</label>
     <input required type="text" formControlName="description" placeholder="Digite a tarefa"
       [ngClass]="campoValidado('description')">
@@ -13,7 +13,7 @@
     </app-mensagem>
     <label for="priority">priority</label>
     <select required formControlName="priority" [ngClass]="campoValidado('priority')">
-      <option disabled value="">Selecione</option>
+      <option value="">Selecione</option>
       <option value="Alta">Alta</option>
       <option value="Normal">Normal</option>
       <option value="Baixa">Baixa</option>
@@ -22,7 +22,7 @@
     </app-mensagem>
     <label for="category">category</label>
     <select required formControlName="category" [ngClass]="campoValidado('category')">
-      <option disabled value="">Selecione</option>
+      <option value="">Selecione</option>
       <option value="Casa">Casa</option>
       <option value="Trabalho">Trabalho</option>
       <option value="Estudos">Estudos</option>
