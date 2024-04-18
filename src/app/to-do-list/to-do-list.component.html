@@ -52,9 +52,8 @@
       (keyup)="filtrarTarefaPorDescricao(campoBusca)">
   </div>
   <div *ngIf="tarefasFiltradas.length > 0, else semTarefas">
-    <div @filterAnimation class="lista-tarefas card-{{ tarefa.category }}"
-      *ngFor="let tarefa of tarefasFiltradas; let i = index" (mouseover)="indexTarefa = i"
-      [@highlightedState]="indexTarefa === i ? 'highlighted' : 'default'">
+    <div class="lista-tarefas card-{{ tarefa.category }}" *ngFor="let tarefa of tarefasFiltradas; let i = index"
+      (mouseover)="indexTarefa = i" [@highlightedState]="indexTarefa === i ? 'highlighted' : 'default'">
       <div class="info-card" @deleteTask>
         <p class="category-tarefa category-{{ tarefa.category }}">
           <img src="assets/icones/{{ tarefa.category }}.png" alt="Ícone de {{ tarefa.category }}">
@@ -65,7 +64,7 @@
         </p>
         <p class="status-tarefa">
           <button [ngClass]="(tarefa.statusFinish == true) ? 'icone-checked' : 'icone-unchecked'"
-            (click)="finalizarTarefa(tarefa.id);" [@checkButton]="(tarefa.id === id ? 'checked' : 'unchecked')">
+            (click)="finalizarTarefa(tarefa);" [@checkButton]="(tarefa.id === id ? 'checked' : 'unchecked')">
           </button>
         </p>
       </div>
@@ -78,7 +77,7 @@
           <button class="botao-editar" (click)="carregarParaEditar(tarefa.id)">
             <img src="assets/icones/icone-editar.png" alt="Ícone de editar">
           </button>
-          <button (click)="excluirTarefa(tarefa.id)" class="botao-deletar">
+          <button (click)="excluirTarefa(tarefa)" class="botao-deletar">
             <img src="assets/icones/icone-excluir.png" alt="Ícone de excluir">
           </button>
         </div>
