@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ToDo } from 'src/app/inteface/todo';
 
 import { ToDoService } from 'src/app/service/to-do.service';
@@ -8,6 +7,7 @@ import {
   highlightedStateTrigger, shownStateTrigger, checkButtonTrigger, deleteTaskTrigger, filterTrigger,
   formButtonTrigger,
   txtAnimationTrigger, shakeTrigger} from '../animations';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-to-do-list',
@@ -24,6 +24,7 @@ export class ToDoListComponent implements OnInit {
   id: number = 0;
   campoBusca: string = '';
   tarefasFiltradas: ToDo[] = [];
+  tarefasSubscription: Subscription = new Subscription()
 
   formulario: FormGroup = this.formBuilder.group({
     id: [0],
@@ -35,16 +36,15 @@ export class ToDoListComponent implements OnInit {
 
   constructor(
     private service: ToDoService,
-    private router: Router,
     private formBuilder: FormBuilder
   ) {}
 
-  ngOnInit(): ToDo[] {
-      this.service.list(this.category).subscribe((toDoList) => {
-        this.toDoList = toDoList;
-        this.tarefasFiltradas = toDoList;
-      });
-      return this.tarefasFiltradas;
+  ngOnInit(): void {
+    this.service.list()
+    this.tarefasSubscription = this.service.tarefas$.subscribe(tarefas => {
+      this.toDoList = tarefas;
+      this.tarefasFiltradas = tarefas;
+    })
   }
 
   mostrarOuEsconderFormulario() {
@@ -94,32 +94,25 @@ export class ToDoListComponent implements OnInit {
   }
 
   editarTarefa() {
-    this.service.editar(this.formulario.value).subscribe({
-      complete: () => this.atualizarComponente(),
-    });
+    if(this.formulario.valid) {
+      const tarefaEditada = this.formulario.value
+      this.service.editar(tarefaEditada, true)
+      this.resetarFormulario()
+     }
   }
 
   criarTarefa() {
-    this.service.criar(this.formulario.value).subscribe({
-      complete: () => this.atualizarComponente(),
-    });
+   if(this.formulario.valid) {
+    const novaTarefa = this.formulario.value
+    this.service.criar(novaTarefa)
+    this.resetarFormulario
+   }
   }
 
-  excluirTarefa(id: number) {
-    if (id) {
-      this.service.excluir(id).subscribe({
-        complete: () => this.recarregarComponente(),
-      })
+  excluirTarefa(tarefa: ToDo) {
+    if (tarefa.id) {
+      this.service.excluir(tarefa.id)
     }
-  }
-
-  atualizarComponente() {
-    this.recarregarComponente();
-    this.resetarFormulario();
-  }
-
-  recarregarComponente() {
-    this.router.navigate(['/toDoList']);
   }
 
   carregarParaEditar(id: number) {
@@ -146,19 +139,9 @@ export class ToDoListComponent implements OnInit {
     } else return 'botao-desabilitado';
   }
 
-  finalizarTarefa(id: number) {
-    this.id = id
-    this.service.buscarPorId(id!).subscribe((todo) => {
-      this.service.atualizarStatusTarefa(todo).subscribe(() => {
-        this.listarAposCheck();
-      });
-    });
-  }
-
-  listarAposCheck() {
-    this.service.list(this.category).subscribe((toDoList) => {
-      this.tarefasFiltradas = toDoList
-    });
+  finalizarTarefa(tarefa: ToDo) {
+    this.id = tarefa.id
+      this.service.atualizarStatusTarefa(tarefa)
   }
 
 }

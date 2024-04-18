@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ToDo } from '../inteface/todo';
 
 @Injectable({
@@ -8,17 +8,20 @@ import { ToDo } from '../inteface/todo';
 })
 export class ToDoService {
   private readonly API = 'http://localhost:3000/todos';
+  private tarefasSubject = new BehaviorSubject<ToDo[]>([]);
+  tarefas$ = this.tarefasSubject.asObservable()
   constructor(private http: HttpClient) { }
 
-  list(category: string): Observable<ToDo[]> {
+  list(): void {
     let params = new HttpParams().appendAll({
       _sort: 'id',
       // _order: 'description',
     });
-    if(category) {
-      params = params.append('category', category);
-    }
-    return this.http.get<ToDo[]>(this.API, { params })
+    this.http.get<ToDo[]>(this.API, { params }).subscribe((tarefas) => {
+      let tarefasTemporarias = this.tarefasSubject.getValue()
+      tarefasTemporarias = tarefasTemporarias.concat(tarefas)
+      this.tarefasSubject.next(tarefasTemporarias)
+    })
   }
 
   buscarPorId(id: number): Observable<ToDo> {
@@ -26,22 +29,42 @@ export class ToDoService {
     return this.http.get<ToDo>(url)
   }
 
-  atualizarStatusTarefa(todo: ToDo): Observable<ToDo> {
+  atualizarStatusTarefa(todo: ToDo): void {
     todo.statusFinish = !todo.statusFinish;
-    return this.editar(todo);
+    this.editar(todo, false);
   }
 
-  criar(todo: ToDo): Observable<ToDo> {
-    return this.http.post<ToDo>(this.API, todo);
+  criar(todo: ToDo): void {
+    this.http.post<ToDo>(this.API, todo).subscribe(novaTarefa => {
+      const tarefas = this.tarefasSubject.getValue()
+      tarefas.unshift(novaTarefa)
+      this.tarefasSubject.next(tarefas)
+    });
   }
 
-  editar(todo: ToDo): Observable<ToDo> {
+  editar(todo: ToDo, atualizarSubject: boolean): void {
     const url = `${this.API}/${todo.id}`;
-    return this.http.put<ToDo>(url, todo)
+    this.http.put<ToDo>(url, todo).subscribe(tarefaEditada => {
+      if(atualizarSubject) {
+        const tarefas = this.tarefasSubject.getValue()
+        const index = tarefas.findIndex(tarefa => tarefa.id === tarefaEditada.id)
+        if(index !== -1) {
+          tarefas[index] = tarefaEditada
+          this.tarefasSubject.next(tarefas)
+        }
+      }
+    })
   }
 
-  excluir(id: number): Observable<ToDo> {
+  excluir(id: number): void {
     const url = `${this.API}/${id}`;
-    return this.http.delete<ToDo>(url)
+    this.http.delete<ToDo>(url).subscribe(() => {
+      const tarefas = this.tarefasSubject.getValue()
+      const index = tarefas.findIndex(tarefa => tarefa.id === id)
+      if(index !== -1) {
+        tarefas.splice(index, 1)
+        this.tarefasSubject.next(tarefas)
+      }
+    })
   }
 }
