@@ -8,7 +8,7 @@ import { RodapeComponent } from './componentes/rodape/rodape.component';
 import { ToDoListComponent } from './to-do-list/to-do-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MensagemComponent } from './componentes/mensagem/mensagem.component'
 
 @NgModule({
@@ -25,7 +25,8 @@ import { MensagemComponent } from './componentes/mensagem/mensagem.component'
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    //NoopAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
