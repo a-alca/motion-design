@@ -51,7 +51,7 @@
     <input type="search" id="campo-busca" placeholder="Busque a sua tarefa aqui!" [(ngModel)]="campoBusca"
       (keyup)="filtrarTarefaPorDescricao(campoBusca)">
   </div>
-  <div *ngIf="tarefasFiltradas.length > 0, else semTarefas">
+  <div @listState *ngIf="tarefasFiltradas.length > 0, else semTarefas">
     <div class="lista-tarefas card-{{ tarefa.category }}" *ngFor="let tarefa of tarefasFiltradas; let i = index"
       (mouseover)="indexTarefa = i" [@highlightedState]="indexTarefa === i ? 'highlighted' : 'default'">
       <div class="info-card" @deleteTask>
